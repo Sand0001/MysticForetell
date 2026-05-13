@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘塔罗指引 | Mystic Tarot Guidance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+SC:wght@300;500&family=Outfit:wght@200;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">🔮</div>
+                <span>MysticForetell</span>
+            </div>
+            <nav class="divination-menu">
+                <a href="#" class="active">塔罗占卜</a>
+                <a href="#">每日运势</a>
+                <a href="#">星座运势</a>
+                <a href="#">关于我们</a>
+            </nav>
+            <div class="nav-utilities">
+                <span style="color: #fff; cursor: pointer;">🎵</span>
+                <span style="color: #fff; cursor: pointer;">🌐</span>
+                <div id="auth-area">
+                    <button class="login-btn" id="show-login-btn" onclick="showAuthModal()">登录</button>
+                    <div class="user-info" id="user-info" style="display:none;">
+                        <span class="user-avatar">🔮</span>
+                        <span class="user-nickname" id="user-nickname"></span>
+                        <button class="logout-btn" onclick="handleLogout()">退出</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- ========== 设置与选择界面 ========== -->
+            <div id="setup-screen">
+                <div class="hero-section">
+                    <h1 class="hero-title">神秘塔罗</h1>
+                    <p class="hero-subtitle">专业解读 ✦ 个性化风格 ✦ 深度分析</p>
+                </div>
+
+                <!-- 牌阵选择大厅 -->
+                <div class="spread-gallery">
+                    <!-- 单牌占卜 -->
+                    <div class="spread-feature-card" data-spread="single">
+                        <div class="card-inner-border">
+                            <h3 class="feature-title">单牌深度指引</h3>
+                            <div class="feature-preview">
+                                <div class="preview-card-single"></div>
+                            </div>
+                            <p class="feature-desc">针对特定问题快速获得核心建议，适合每日运势或紧急决策。</p>
+                            <button class="pill-btn">开启单牌启示</button>
+                        </div>
+                    </div>
+
+                    <!-- 三牌占卜 -->
+                    <div class="spread-feature-card" data-spread="three">
+                        <div class="card-inner-border">
+                            <h3 class="feature-title">经典三牌阵</h3>
+                            <div class="feature-preview">
+                                <div class="three-card-row">
+                                    <div class="mini-card-preview"></div>
+                                    <div class="mini-card-preview"></div>
+                                    <div class="mini-card-preview"></div>
+                                </div>
+                                <div class="three-labels">
+                                    <span>过去</span> <span>现在</span> <span>未来</span>
+                                </div>
+                            </div>
+                            <p class="feature-desc">深入解析事物的演变轨迹，全面理解因果循环与当前局势。</p>
+                            <button class="pill-btn">开启时空解析</button>
+                        </div>
+                    </div>
+
+                    <!-- 凯尔特十字 -->
+                    <div class="spread-feature-card" data-spread="celtic">
+                        <div class="card-inner-border">
+                            <h3 class="feature-title">凯尔特十字大牌阵</h3>
+                            <div class="feature-preview">
+                                <div class="celtic-mini-diagram">
+                                    <div class="mini-card-back m-c-1"></div>
+                                    <div class="mini-card-back m-c-2"></div>
+                                    <div class="mini-card-back m-c-3"></div>
+                                    <div class="mini-card-back m-c-4"></div>
+                                    <div class="mini-card-back m-c-5"></div>
+                                    <div class="mini-card-back m-c-6"></div>
+                                    <div class="mini-card-back m-c-7"></div>
+                                    <div class="mini-card-back m-c-8"></div>
+                                    <div class="mini-card-back m-c-9"></div>
+                                    <div class="mini-card-back m-c-10"></div>
+                                </div>
+                            </div>
+                            <p class="feature-desc">塔罗界最权威的牌阵。深度剖析潜意识、阻碍、环境及最终宿命。</p>
+                            <button class="pill-btn">探索灵魂蓝图</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-section" id="question-area" style="display: none;">
+                    <textarea id="user-question" placeholder="请在此静心写下您的困惑...（例如：我未来的事业发展趋势如何？）"></textarea>
+                    <p class="ritual-hint">闭上双眼，深呼吸，在心中默想你的问题...</p>
+                    <div class="shuffle-btn-container">
+                        <button id="shuffle-btn">✦ 开始洗牌 ✦</button>
+                    </div>
+                </div>
+
+                <div id="card-picker-area" style="display: none; margin-top: 1rem;">
+                    <p id="pick-guide" style="margin-bottom: 0.5rem; color: var(--accent-gold); font-size: 1.05rem; letter-spacing: 1px;">
+                        正在选择：第 1 张牌
+                    </p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
+                        还需选择 <span id="pick-count-hint" style="color: var(--accent-gold); font-weight: 600;">1</span> 张牌
+                    </p>
+                    <div id="picked-shelf" class="picked-shelf"></div>
+                    <div id="interactive-deck" class="interactive-deck"></div>
+                </div>
+            </div>
+
+            <!-- ========== 结果界面 ========== -->
+            <div id="result-screen" style="display: none;">
+                <div class="result-layout">
+                    <div class="cards-panel">
+                        <div id="cards-display-container"></div>
+                    </div>
+                    
+                    <div class="interpretation-panel">
+                        <div id="loading-spinner" class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>神秘力量正在感应牌阵内容...</p>
+                        </div>
+                        <div id="interpretation-box" class="interpretation-box">
+                            <div id="result-question-display" class="result-question-display"></div>
+                            <h3>✦ 灵性解读结果 ✦</h3>
+                            <div id="interpretation-text"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="btn-primary" id="reset-btn">返回首页</button>
+                        <button class="btn-secondary" id="save-poster-btn">生成分享海报</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 海报预览遮罩层 -->
+    <div id="poster-overlay" class="poster-overlay">
+        <p class="poster-hint">✦ 长按图片保存并分享你的启示 ✦</p>
+        <div class="poster-preview-container" id="poster-preview-container">
+            <!-- 生成的海报图片将插入这里 -->
+        </div>
+        <button class="btn-secondary" id="close-poster-btn">关闭预览</button>
+    </div>
+
+    <!-- ========== 登录/注册弹窗 ========== -->
+    <div class="auth-overlay" id="auth-overlay" style="display:none;" onclick="if(event.target===this)hideAuthModal()">
+        <div class="auth-modal">
+            <button class="auth-close" onclick="hideAuthModal()">✕</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">登录</button>
+                <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">注册</button>
+            </div>
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="auth-field" id="nickname-field" style="display:none;">
+                    <input type="text" id="auth-nickname" placeholder="昵称（选填）" autocomplete="off">
+                </div>
+                <div class="auth-field">
+                    <input type="text" id="auth-username" placeholder="用户名" required autocomplete="off">
+                </div>
+                <div class="auth-field">
+                    <input type="password" id="auth-password" placeholder="密码（至少6位）" required>
+                </div>
+                <p class="auth-error" id="auth-error"></p>
+                <button type="submit" class="auth-submit" id="auth-submit-btn">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <!-- 为了生成海报，引入 html2canvas 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>
