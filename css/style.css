@@ -230,12 +230,14 @@ header {
 }
 
 .interactive-deck {
-    height: 350px; /* 增加高度确保牌堆完全显示 */
+    height: 280px; /* 固定高度，重新改为堆叠感 */
     position: relative;
-    margin: 4rem 0;
-    width: 100%;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 1000px;
     display: flex;
     justify-content: center;
+    overflow: visible; /* 允许悬停时卡片突出 */
 }
 
 .deck-card {
@@ -244,22 +246,21 @@ header {
     background-image: url('../assets/home-images-001-sm.webp');
     background-size: cover;
     background-position: center;
-    border: 1px solid var(--accent-purple);
+    border: 1px solid rgba(168, 85, 247, 0.4);
     border-radius: 8px;
-    position: absolute;
-    left: 50%;
-    margin-left: -35px;
     cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    transform-origin: bottom center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    position: absolute; /* 恢复绝对定位实现堆叠 */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .deck-card:hover {
-    transform: translateY(-40px) scale(1.15) !important;
-    z-index: 1000 !important;
+    transform: translateY(-80%) scale(1.1); /* 悬浮时显著向上方突出 */
     border-color: var(--accent-gold);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 0 30px var(--accent-glow);
+    z-index: 1000 !important;
 }
 
 /* 展示架增强 */
@@ -994,14 +995,13 @@ header {
 
     /* 选牌区移动端适配 */
     .interactive-deck {
-        height: 250px;
-        margin: 2rem 0;
+        height: 200px;
+        width: 95%;
     }
 
     .deck-card {
         width: 50px;
-        height: 85px;
-        margin-left: -25px;
+        height: 90px;
     }
 
     .picked-shelf {

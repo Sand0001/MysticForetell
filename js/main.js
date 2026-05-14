@@ -99,19 +99,17 @@ shuffleBtn.addEventListener('click', async () => {
 
 function generateInteractiveDeck(total) {
     interactiveDeck.innerHTML = '';
-    const isMobile = window.innerWidth < 768;
-    const spacing = isMobile ? 4 : 10;
-    const angleStep = isMobile ? 0.8 : 1.5;
-    const cardWidth = isMobile ? 50 : 70;
+    // 自动计算间距，使 78 张牌正好铺满容器宽度，形成紧凑的堆叠感
+    const containerWidth = interactiveDeck.clientWidth;
+    const cardWidth = window.innerWidth < 768 ? 50 : 70;
+    const spacing = (containerWidth - cardWidth) / (total - 1);
 
     for (let i = 0; i < total; i++) {
         const card = document.createElement('div');
         card.className = 'deck-card';
-        // 扇形分布
-        const angle = (i - total / 2) * angleStep;
-        const translateX = (i - total / 2) * spacing;
-        card.style.transform = `translateX(${translateX}px) rotate(${angle}deg)`;
+        card.style.left = `${i * spacing}px`;
         card.style.zIndex = i;
+        
         card.addEventListener('click', () => pickCard(card, i));
         interactiveDeck.appendChild(card);
     }
