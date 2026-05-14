@@ -910,29 +910,54 @@ header {
         --app-padding: 1rem;
     }
 
-    #app {
-        padding: 1rem;
+    header {
+        flex-direction: column; /* 手机端改为垂直堆叠，防止挤压 */
+        padding: 0.6rem 1rem;
+        gap: 0.8rem;
+        height: auto;
     }
 
-    .main-title {
-        font-size: 1.8rem;
-        letter-spacing: 0.6rem;
+    .logo-area {
+        font-size: 1.2rem;
+    }
+    
+    .logo-area span {
+        white-space: nowrap; /* 核心修改：防止“知了”文字换行 */
     }
 
-    .subtitle {
-        font-size: 0.6rem;
-        letter-spacing: 0.3rem;
+    .brand-logo {
+        width: 36px;
+        height: 36px;
     }
 
     .divination-menu {
-        gap: 1rem;
-        flex-wrap: wrap;
-        padding: 0.5rem 0;
+        width: 100%;
+        justify-content: space-around; /* 均匀分布菜单项 */
+        gap: 0.5rem;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding-top: 0.8rem;
     }
 
     .divination-menu a {
+        font-size: 0.85rem;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
+    .nav-utilities {
+        position: absolute;
+        right: 1rem;
+        top: 0.8rem;
+        gap: 0.8rem;
+    }
+
+    .login-btn {
+        padding: 0.3rem 1rem;
         font-size: 0.8rem;
-        letter-spacing: 0.1rem;
+    }
+
+    #app {
+        padding: 5rem 1rem 2rem; /* 调整顶部间距以适应加高的 Header */
     }
 
     .hero-title {
@@ -995,45 +1020,37 @@ header {
 
     /* 结果页移动端适配 */
     .result-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 1.5rem;
     }
 
     .cards-panel {
+        padding: 1.5rem 1rem;
+    }
+
+    /* 海报预览遮罩层移动端优化 */
+    .poster-overlay {
         padding: 1rem;
     }
 
-    /* 凯尔特十字移动端特别处理 - 改为更紧凑的布局或可滑动 */
-    .celtic-layout {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+    .poster-preview-container {
+        max-width: 100%;
+        max-height: 65vh;
+        margin-bottom: 1.5rem;
     }
 
-    .card-display {
-        width: 80px;
-        height: 140px;
+    #close-poster-btn {
+        width: auto !important;
+        padding: 0.7rem 2rem;
+        font-size: 0.9rem;
+        min-width: 150px;
     }
 
-    .interpretation-box {
-        padding-left: 1rem;
+    .poster-hint {
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
     }
-
-    .interpretation-box h3 {
-        font-size: 1.3rem;
-    }
-
-    #interpretation-text {
-        font-size: 0.95rem;
-        line-height: 1.8;
-    }
-
-    /* 全屏沉浸感 */
-    body {
-        background-attachment: scroll; /* 移动端 fixed 背景有时有性能问题 */
-    }
-}
 
 /* 针对极小屏幕 */
 @media (max-width: 380px) {
