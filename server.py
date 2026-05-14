@@ -16,7 +16,7 @@ from database import (
     save_divination_log, get_user_logs
 )
 
-app = FastAPI(title="MysticForetell API")
+app = FastAPI(title="知了 API")
 
 app.add_middleware(
     CORSMiddleware,

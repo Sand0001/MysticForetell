@@ -330,7 +330,7 @@ savePosterBtn.addEventListener('click', async () => {
         footer.innerHTML = `
             <div style="border-top: 1px solid rgba(168, 85, 247, 0.2); padding-top: 20px; display: flex; justify-content: space-between; align-items: center;">
                 <p style="color: #64748b; font-size: 11px;">生成日期：${new Date().toLocaleDateString()}</p>
-                <p style="color: #a855f7; font-size: 13px; letter-spacing: 1px; font-weight: 600;">由 MysticForetell AI 提供指引</p>
+                <p style="color: #a855f7; font-size: 13px; letter-spacing: 1px; font-weight: 600;">由 知了 AI 提供指引</p>
             </div>
         `;
         posterContent.appendChild(footer);
